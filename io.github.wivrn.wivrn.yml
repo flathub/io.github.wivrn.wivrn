@@ -153,7 +153,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: 6da658bcfb4f67abd6c697f2c222529a20ac10ca # v0.18 + patches for flatpak not yet merged in master
+        tag: 9af47ce00b662befa66298236faa18e968a63615 # v0.18 + patches for flatpak not yet merged in master
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
