@@ -149,6 +149,7 @@ modules:
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
       - -DXRT_IPC_MSG_SOCK_FILENAME=wivrn/comp_ipc
+      - -DGIT_DESC=v0.18
       - -Wno-dev
     sources:
       - type: git
@@ -178,10 +179,7 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/znixian/OpenOVR.git
-        tag: 632e5cc50b913e93194ca2970e6f13021182579f
-      - type: patch
-        paths:
-          - opencomposite-0001-Add-install-target.patch
+        tag: cf7bd799a7d3d7332543bfee5c425d3cdcad2282
 
   - name: launcher
     buildsystem: simple
