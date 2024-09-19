@@ -149,19 +149,19 @@ modules:
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
       - -DXRT_IPC_MSG_SOCK_FILENAME=wivrn/comp_ipc
-      - -DGIT_DESC=v0.18
+      - -DGIT_DESC=v0.19
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: 9af47ce00b662befa66298236faa18e968a63615 # v0.18 + patches for flatpak not yet merged in master
+        tag: v0.19
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: dfc602288ab05131584a3f2be18031a13fccd061
+        tag: bcbe19ddd795f182df42051e5495e9727db36c1c
         dest: deps/monado-src
       - type: shell
         commands:
