@@ -1,8 +1,9 @@
+# kate: syntax yaml
 id: io.github.wivrn.wivrn
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
-command: launch-wivrn-server
+runtime: org.kde.Platform
+runtime-version: '6.7'
+sdk: org.kde.Sdk
+command: launch-wivrn-dashboard
 
 finish-args:
   # X11 + XShm access
@@ -25,6 +26,11 @@ finish-args:
   - --filesystem=xdg-config/openvr:create
   # Let outside application access the WiVRn socket
   - --filesystem=xdg-run/wivrn:create
+  - --own-name=io.github.wivrn.Server
+  # QSystemTrayIcon
+  - --talk-name=org.kde.StatusNotifierWatcher
+  # Run processes outside of sandbox
+  - --talk-name=org.freedesktop.Flatpak
 
 cleanup:
   - /lib/pkgconfig
@@ -95,7 +101,9 @@ modules:
       - make install
     cleanup:
       - /share/ffmpeg
-
+      - /bin/ffmpeg
+      - /bin/ffplay
+      - /bin/ffprobe
     sources:
     - type: git
       url: https://gitlab.com/freedesktop-sdk/mirrors/ffmpeg/ffmpeg.git
@@ -141,35 +149,37 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DWIVRN_BUILD_CLIENT=OFF
+      - -DWIVRN_BUILD_SERVER=ON
+      - -DWIVRN_BUILD_DASHBOARD=ON
       - -DWIVRN_USE_VAAPI=ON
       - -DWIVRN_USE_X264=ON
       - -DWIVRN_USE_NVENC=ON
       - -DWIVRN_USE_PULSEAUDIO=OFF
-      - -DWIVRN_USE_GLIB=ON
+      - -DWIVRN_WERROR=ON
+      - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DXRT_IPC_MSG_SOCK_FILENAME=wivrn/comp_ipc
-      - -DGIT_DESC=v0.19
+      - -DGIT_DESC=v0.20
+      - -DGIT_COMMIT=v0.20
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.19
+        tag: v0.20
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: bcbe19ddd795f182df42051e5495e9727db36c1c
+        tag: d7089f182b0514e13554e99512d63e69c30523c5
         dest: deps/monado-src
       - type: shell
         commands:
          - cd deps/monado-src && ../../patches/apply.sh ../../patches/monado
-    build-commands:
-      - install -DTm644 images/wivrn.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/io.github.wivrn.wivrn.svg
-      - install -Dm644 flatpak/io.github.wivrn.wivrn.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
-      - install -Dm644 flatpak/io.github.wivrn.wivrn.desktop -t ${FLATPAK_DEST}/share/applications
+      - type: shell
+        commands:
+         - sed -i "s,Exec=.*$,Exec=${FLATPAK_DEST}/bin/launch-wivrn-dashboard," dashboard/io.github.wivrn.wivrn.desktop.in
 
   - name: opencomposite
     buildsystem: cmake-ninja
@@ -179,17 +189,35 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/znixian/OpenOVR.git
-        tag: cf7bd799a7d3d7332543bfee5c425d3cdcad2282
+        tag: 402aff64a7f60dc142fd50d0da6ae5214cdfdc49
 
   - name: launcher
     buildsystem: simple
     build-commands:
-      - install -Dm755 launch-wivrn-server.sh ${FLATPAK_DEST}/bin/launch-wivrn-server
+      - install -Dm755 launch-wivrn-dashboard.sh ${FLATPAK_DEST}/bin/launch-wivrn-dashboard
     sources:
       - type: script
-        dest-filename: launch-wivrn-server.sh
+        dest-filename: launch-wivrn-dashboard.sh
         commands:
-        - rm -f $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
-        - sed -ne 's#app-path=\(.*\)#{"runtime":["\1/OpenComposite"],"version":1}#p' /.flatpak-info > $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
-        - chmod -w $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
-        - wivrn-server
+          - if [ -f $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath ]
+          - then
+          -         mv $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath $XDG_CONFIG_HOME/openvrpaths.vrpath-backup
+          - else
+          -         rm -f $XDG_CONFIG_HOME/openvrpaths.vrpath-backup
+          - fi
+          -
+          - sed -ne 's#app-path=\(.*\)#{"runtime":["\1/OpenComposite"],"version":1}#p' /.flatpak-info > $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
+          - chmod -w $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
+          -
+          - cleanup() {
+          -         rm -f $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
+          -         if [ -f $XDG_CONFIG_HOME/openvrpaths.vrpath-backup ]
+          -         then
+          -                 mv $XDG_CONFIG_HOME/openvrpaths.vrpath-backup $XDG_CONFIG_HOME/openvr/openvrpaths.vrpath
+          -         fi
+          -         trap - EXIT
+          - '}'
+          -
+          - trap cleanup EXIT INT TERM HUP
+          -
+          - wivrn-dashboard
