@@ -31,6 +31,8 @@ finish-args:
   - --talk-name=org.kde.StatusNotifierWatcher
   # Run processes outside of sandbox
   - --talk-name=org.freedesktop.Flatpak
+  # Inhibit sleeping while a session is active
+  - --system-talk-name=org.freedesktop.login1
 
 cleanup:
   - /lib/pkgconfig
@@ -159,20 +161,20 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.20
-      - -DGIT_COMMIT=v0.20
+      - -DGIT_DESC=v0.21
+      - -DGIT_COMMIT=v0.21
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.20
+        tag: bacc187b262b7c85800b649dec19f9cf20c7c9c5 # v0.21 + remove set -e in patches/apply.sh
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: d7089f182b0514e13554e99512d63e69c30523c5
+        tag: cef70d03ca749225af0de57824270ad708bd828a
         dest: deps/monado-src
       - type: shell
         commands:
