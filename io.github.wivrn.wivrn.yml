@@ -167,7 +167,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: bacc187b262b7c85800b649dec19f9cf20c7c9c5 # v0.21 + remove set -e in patches/apply.sh
+        tag: 3f01d2b3b303d67086c6d4c0cf5be990e7236049 # v0.21 + remove set -e in patches/apply.sh + fix metainfo
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
