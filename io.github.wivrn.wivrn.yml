@@ -4,6 +4,7 @@ runtime: org.kde.Platform
 runtime-version: '6.7'
 sdk: org.kde.Sdk
 command: wivrn-dashboard
+separate-locales: false
 
 finish-args:
   # X11 + XShm access
@@ -159,6 +160,16 @@ modules:
       url: https://gitlab.gnome.org/GNOME/libnotify.git
       tag: 0.8.3
 
+  - name: qcoro
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DQCORO_BUILD_EXAMPLES=OFF
+      - -DQCORO_BUILD_TESTING=OFF
+    sources:
+    - type: git
+      url: https://github.com/qcoro/qcoro.git
+      tag: v0.11.0
+
   - name: wivrn
     buildsystem: cmake-ninja
     config-opts:
@@ -174,20 +185,20 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.22
-      - -DGIT_COMMIT=v0.22
+      - -DGIT_DESC=v0.23
+      - -DGIT_COMMIT=v0.23
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.22
+        tag: v0.23
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: aa2b0f9f1d638becd6bb9ca3c357ac2561a36b07
+        tag: 848a24aa106758fd6c7afcab6d95880c57dbe450
         dest: deps/monado-src
       - type: shell
         commands:
@@ -202,4 +213,9 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/znixian/OpenOVR.git
-        tag: 34311dabf430d6051d7e97f6081842a5394d2a67
+        tag: d37c9e7a4bc41f2b636282064eb39efb9e50d48b
+      - type: shell
+        commands:
+          # we can't have inline patches apparently
+          - sed 's/.section .rodata/.section .note.GNU-stack,"",@progbits\n.section .rodata/' -i OpenOVR/Misc/resources_linux.s
+
