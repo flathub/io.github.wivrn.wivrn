@@ -48,6 +48,83 @@ cleanup:
   - '*.la'
 
 modules:
+  - name: crosstool
+    buildsystem: autotools
+    sources:
+    - type: git
+      url: https://github.com/crosstool-ng/crosstool-ng.git
+      tag: 70c2b00ad79a0a21a48e5a0eedc9f91c374af21d
+    cleanup:
+      - '*'
+
+  - name: rsync
+    buildsystem: autotools
+    config-opts:
+      - --disable-md2man
+    sources:
+    - type: git
+      url: https://github.com/RsyncProject/rsync.git
+      tag: 3305a7a063ab0167cab5bf7029da53abaa9fdb6e
+    cleanup:
+      - '*'
+
+  - name: toolchain
+    sources:
+    - type: file
+      url: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.177.tar.xz
+      sha256: ea9eb8088d4231f8a01b191ceef5f4d92238f6c7519f6fbcb57e448ee9e0a6e0
+    - type: file
+      url: https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.xz
+      sha256: 38ef96b8dfe510d42707d9c781877914792541133e1870841463bfa73f883e32
+    - type: file
+      url: https://github.com/facebook/zstd/releases/download/v1.5.6/zstd-1.5.6.tar.gz
+      sha256: 8c29e06cf42aacc1eafc4077ae2ec6c6fcb96a626157e0593d5e82a34fd403c1
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz
+      sha256: a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
+    - type: file
+      url: https://www.mpfr.org/mpfr-4.2.1/mpfr-4.2.1.tar.xz
+      sha256: 277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2
+    - type: file
+      url: https://libisl.sourceforge.io/isl-0.26.tar.xz
+      sha256: a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504
+    - type: file
+      url: https://www.multiprecision.org/downloads/mpc-1.3.1.tar.gz
+      sha256: ab642492f5cf882b74aa0cb730cd410a81edcdbec895183ce930e706c1c759b8
+    - type: file
+      url: https://invisible-mirror.net/archives/ncurses/ncurses-6.4.tar.gz
+      sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/libiconv/libiconv-1.16.tar.gz
+      sha256: e6a1b1b589654277ee790cce3734f07876ac4ccfaecbee8afa0b649cf529cc04
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/gettext/gettext-0.23.1.tar.xz
+      sha256: c1f97a72a7385b7e71dd07b5fea6cdaf12c9b88b564976b23bd8c11857af2970
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/binutils/binutils-2.43.1.tar.xz
+      sha256: 13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz
+      sha256: a6e21868ead545cf87f0c01f84276e4b5281d672098591c1c896241f09363478
+    - type: file
+      url: https://ftpmirror.gnu.org/gnu/glibc/glibc-2.35.tar.xz
+      sha256: 5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e
+    - type: file
+      path: ct-ng-x86_64.config
+      dest-filename: .config
+      only-arches:
+          - x86_64
+    - type: file
+      path: ct-ng-aarch64.config
+      dest-filename: .config
+      only-arches:
+          - aarch64
+    buildsystem: simple
+    build-commands:
+      - env -u CXXFLAGS -u CFLAGS -u CPLUS_INCLUDE_PATH -u C_INCLUDE_PATH -u LD_LIBRARY_PATH CT_PREFIX=/app TAR_OPTIONS=--no-same-owner ct-ng build
+    cleanup:
+      - '*'
+
   - name: libavahi-client
     buildsystem: autotools
     config-opts:
@@ -170,12 +247,89 @@ modules:
       url: https://github.com/qcoro/qcoro.git
       tag: v0.11.0
 
+  - name: opencomposite
+    buildsystem: cmake-ninja
+    build-options:
+      cflags: -idirafter/usr/include
+      cxxflags: -idirafter/usr/include
+      arch:
+        aarch64:
+          ldflags: -L/usr/lib/aarch64-linux-gnu
+          env:
+            CC: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-gcc
+            CXX: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-g++
+        x86_64:
+          ldflags: -L/usr/lib/x86_64-linux-gnu
+          env:
+            CC: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-gcc
+            CXX: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-g++
+    config-opts:
+      - -DUSE_SYSTEM_OPENXR=OFF
+      - -DUSE_SYSTEM_GLM=OFF
+    sources:
+      - type: git
+        url: https://gitlab.com/znixian/OpenOVR.git
+        tag: d37c9e7a4bc41f2b636282064eb39efb9e50d48b
+      - type: shell
+        commands:
+          # we can't have inline patches apparently
+          - sed 's/.section .rodata/.section .note.GNU-stack,"",@progbits\n.section .rodata/' -i OpenOVR/Misc/resources_linux.s
+
+  - name: wivrn-library
+    buildsystem: cmake-ninja
+    build-options:
+      arch:
+        aarch64:
+          ldflags: -L/usr/lib/aarch64-linux-gnu -Wl,--warn-unresolved-symbols
+          cflags: -idirafter/usr/include -idirafter/usr/lib/aarch64-linux-gnu/include/
+          cxxflags: -idirafter/usr/include -idirafter/usr/lib/aarch64-linux-gnu/include/
+          env:
+            CC: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-gcc
+            CXX: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-g++
+        x86_64:
+          ldflags: -L/usr/lib/x86_64-linux-gnu -Wl,--warn-unresolved-symbols
+          cflags: -idirafter/usr/include -idirafter/usr/lib/x86_64-linux-gnu/include/
+          cxxflags: -idirafter/usr/include -idirafter/usr/lib/x86_64-linux-gnu/include/
+          env:
+            CC: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-gcc
+            CXX: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-g++
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DWIVRN_BUILD_CLIENT=OFF
+      - -DWIVRN_BUILD_SERVER=OFF
+      - -DWIVRN_BUILD_SERVER_LIBRARY=ON
+      - -DWIVRN_BUILD_DASHBOARD=OFF
+      - -DWIVRN_BUILD_WIVRNCTL=OFF
+      - -DWIVRN_WERROR=ON
+      - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+      - -DFETCHCONTENT_BASE_DIR=deps
+      - -DGIT_DESC=v0.23
+      - -DGIT_COMMIT=v0.23
+      - -Wno-dev
+    sources:
+      - type: git
+        url: https://github.com/WiVRn/WiVRn.git
+        tag: 61c04afffcc41fee68e9c5b7c86fdac04c204be3
+      - type: archive
+        url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
+        dest: deps/boostpfr-src
+        sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
+      - type: git
+        url: https://gitlab.freedesktop.org/monado/monado
+        tag: 848a24aa106758fd6c7afcab6d95880c57dbe450
+        dest: deps/monado-src
+      - type: shell
+        commands:
+         - cd deps/monado-src && ../../patches/apply.sh ../../patches/monado/*
+         - cd deps/boostpfr-src && ../../patches/apply.sh ../../flatpak/boostpfr-gcc-12-internal-compiler-error.patch
+
   - name: wivrn
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DWIVRN_BUILD_CLIENT=OFF
       - -DWIVRN_BUILD_SERVER=ON
+      - -DWIVRN_BUILD_SERVER_LIBRARY=OFF
       - -DWIVRN_BUILD_DASHBOARD=ON
       - -DWIVRN_USE_VAAPI=ON
       - -DWIVRN_USE_X264=ON
@@ -191,7 +345,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.23
+        tag: 61c04afffcc41fee68e9c5b7c86fdac04c204be3
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
@@ -204,18 +358,4 @@ modules:
         commands:
          - cd deps/monado-src && ../../patches/apply.sh ../../patches/monado/*
          - cd deps/boostpfr-src && ../../patches/apply.sh ../../flatpak/boostpfr-gcc-12-internal-compiler-error.patch
-
-  - name: opencomposite
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DUSE_SYSTEM_OPENXR=OFF
-      - -DUSE_SYSTEM_GLM=OFF
-    sources:
-      - type: git
-        url: https://gitlab.com/znixian/OpenOVR.git
-        tag: d37c9e7a4bc41f2b636282064eb39efb9e50d48b
-      - type: shell
-        commands:
-          # we can't have inline patches apparently
-          - sed 's/.section .rodata/.section .note.GNU-stack,"",@progbits\n.section .rodata/' -i OpenOVR/Misc/resources_linux.s
 
