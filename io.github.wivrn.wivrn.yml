@@ -303,13 +303,13 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.23
-      - -DGIT_COMMIT=v0.23
+      - -DGIT_DESC=v0.23.1
+      - -DGIT_COMMIT=v0.23.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: 61c04afffcc41fee68e9c5b7c86fdac04c204be3
+        tag: v0.23.1
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
@@ -339,13 +339,13 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.23
-      - -DGIT_COMMIT=v0.23
+      - -DGIT_DESC=v0.23.1
+      - -DGIT_COMMIT=v0.23.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: 61c04afffcc41fee68e9c5b7c86fdac04c204be3
+        tag: v0.23.1
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
