@@ -3,6 +3,9 @@ id: io.github.wivrn.wivrn
 runtime: org.kde.Platform
 runtime-version: '6.8'
 sdk: org.kde.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.llvm18
 command: wivrn-dashboard
 separate-locales: false
 
@@ -235,8 +238,8 @@ modules:
       - -Ddocbook_docs=disabled
     sources:
     - type: git
-      url: https://gitlab.gnome.org/GNOME/libnotify.git
-      tag: 0.8.3
+      url: https://github.com/GNOME/libnotify.git
+      tag: 131aad01ff5f563b4863becbb6ed84dac6e75d5a
 
   - name: qcoro
     buildsystem: cmake-ninja
@@ -270,7 +273,39 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/znixian/OpenOVR.git
-        tag: aa25936e3884b0da5862280c7ec523e3f3e0c7ae
+        tag: 538639b86c5c71223f11040b09479e5c0a83078c
+
+  - name: xrizer
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin
+      cflags: -idirafter/usr/include
+      cxxflags: -idirafter/usr/include
+      env:
+        CARGO_HOME: /run/build/xrizer/cargo
+      arch:
+        aarch64:
+          ldflags: -L/usr/lib/aarch64-linux-gnu -Wl,--warn-unresolved-symbols
+          env:
+            CC: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-gcc
+            CXX: /app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-g++
+            RUSTFLAGS: -C linker=/app/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-gcc
+        x86_64:
+          ldflags: -L/usr/lib/x86_64-linux-gnu -Wl,--warn-unresolved-symbols
+          env:
+            CC: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-gcc
+            CXX: /app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-g++
+            RUSTFLAGS: -C linker=/app/x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-gcc
+    build-commands:
+      - cargo --offline fetch --manifest-path Cargo.toml --verbose
+      - cargo xbuild --release
+      - mkdir /app/xrizer
+      - cp -rL target/release/bin/ /app/xrizer/
+    sources:
+      - type: git
+        url: https://github.com/Supreeeme/xrizer.git
+        tag: fcc6793ffeadf0d7676c4cfd5a6c57da481a520c
+      - xrizer-gen-src.json
 
   - name: wivrn-library
     buildsystem: cmake-ninja
@@ -303,20 +338,20 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.24.1
-      - -DGIT_COMMIT=v0.24.1
+      - -DGIT_DESC=v0.25
+      - -DGIT_COMMIT=v0.25
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.24.1
+        tag: v0.25
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 848a24aa106758fd6c7afcab6d95880c57dbe450
+        tag: 2a6932d46dad9aa957205e8a47ec2baa33041076
         dest: deps/monado-src
       - type: shell
         commands:
@@ -340,23 +375,22 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.24.1
-      - -DGIT_COMMIT=v0.24.1
+      - -DGIT_DESC=v0.25
+      - -DGIT_COMMIT=v0.25
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.24.1
+        tag: v0.25
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 848a24aa106758fd6c7afcab6d95880c57dbe450
+        tag: 2a6932d46dad9aa957205e8a47ec2baa33041076
         dest: deps/monado-src
       - type: shell
         commands:
          - cd deps/monado-src && ../../patches/apply.sh ../../patches/monado/*
          - cd deps/boostpfr-src && ../../patches/apply.sh ../../flatpak/boostpfr-gcc-12-internal-compiler-error.patch
-
