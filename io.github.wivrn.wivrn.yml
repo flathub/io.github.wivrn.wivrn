@@ -338,20 +338,21 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.25
-      - -DGIT_COMMIT=v0.25
+      - -DGIT_DESC=v25.6
+      - -DGIT_COMMIT=v25.6
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.25
+        tag: v25.6
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 2a6932d46dad9aa957205e8a47ec2baa33041076
+        tag: bb9bcee2a3be75592de819d9e3fb2c8ed27bb7dc
+
         dest: deps/monado-src
       - type: shell
         commands:
@@ -375,20 +376,21 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v0.25
-      - -DGIT_COMMIT=v0.25
+      - -DGIT_DESC=v25.6
+      - -DGIT_COMMIT=v25.6
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v0.25
+        tag: v25.6
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 2a6932d46dad9aa957205e8a47ec2baa33041076
+        tag: bb9bcee2a3be75592de819d9e3fb2c8ed27bb7dc
+
         dest: deps/monado-src
       - type: shell
         commands:
