@@ -23,6 +23,12 @@ finish-args:
   - --system-talk-name=org.freedesktop.Avahi
   # Allow getting the pretty hostname
   - --system-talk-name=org.freedesktop.hostname1
+  # List applications from $XDG_DATA_DIRS
+  - --filesystem=host-os:ro
+  - --filesystem=xdg-data/applications:ro
+  - --filesystem=xdg-data/Steam:ro
+  # List flatpak Steam games
+  - --filesystem=~/.var/app/com.valvesoftware.Steam:ro
   # Pipewire
   - --filesystem=xdg-run/pipewire-0
   # Set the active OpenXR / OpenVR runtime
@@ -90,10 +96,11 @@ modules:
       url: https://www.mpfr.org/mpfr-4.2.1/mpfr-4.2.1.tar.xz
       sha256: 277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2
     - type: file
-      url: https://libisl.sourceforge.io/isl-0.26.tar.xz
+      dest-filename: isl-0.26.tar.xz
+      url: https://sourceforge.net/projects/libisl/files/isl-0.26.tar.xz/download
       sha256: a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504
     - type: file
-      url: https://www.multiprecision.org/downloads/mpc-1.3.1.tar.gz
+      url: https://ftpmirror.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
       sha256: ab642492f5cf882b74aa0cb730cd410a81edcdbec895183ce930e706c1c759b8
     - type: file
       url: https://invisible-mirror.net/archives/ncurses/ncurses-6.4.tar.gz
@@ -338,20 +345,20 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.6.1
-      - -DGIT_COMMIT=v25.6.1
+      - -DGIT_DESC=v25.8
+      - -DGIT_COMMIT=v25.8
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.6.1
+        tag: v25.8
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: bb9bcee2a3be75592de819d9e3fb2c8ed27bb7dc
+        tag: 5c137fe28b232fe460f9b03defa7749adc32ee48
 
         dest: deps/monado-src
       - type: shell
@@ -376,20 +383,20 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.6.1
-      - -DGIT_COMMIT=v25.6.1
+      - -DGIT_DESC=v25.8
+      - -DGIT_COMMIT=v25.8
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.6.1
+        tag: v25.8
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: bb9bcee2a3be75592de819d9e3fb2c8ed27bb7dc
+        tag: 5c137fe28b232fe460f9b03defa7749adc32ee48
 
         dest: deps/monado-src
       - type: shell
