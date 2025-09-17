@@ -345,26 +345,21 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.8
-      - -DGIT_COMMIT=v25.8
+      - -DGIT_DESC=v25.9
+      - -DGIT_COMMIT=v25.9
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.8
-      - type: archive
-        url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
-        dest: deps/boostpfr-src
-        sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
+        tag: v25.9
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 5c137fe28b232fe460f9b03defa7749adc32ee48
+        tag: 7a4018e2d89151e60e562fac79eba90ca7a328d8
 
         dest: deps/monado-src
       - type: shell
         commands:
          - cd deps/monado-src && ../../patches/apply.sh ../../patches/monado/*
-         - cd deps/boostpfr-src && ../../patches/apply.sh ../../flatpak/boostpfr-gcc-12-internal-compiler-error.patch
 
   - name: wivrn
     buildsystem: cmake-ninja
@@ -379,24 +374,26 @@ modules:
       - -DWIVRN_USE_NVENC=ON
       - -DWIVRN_USE_VULKAN_ENCODE=ON
       - -DWIVRN_USE_PULSEAUDIO=OFF
+      - -DWIVRN_USE_PIPEWIRE=ON
+      - -DWIVRN_USE_SYSTEM_BOOST=OFF
       - -DWIVRN_WERROR=ON
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.8
-      - -DGIT_COMMIT=v25.8
+      - -DGIT_DESC=v25.9
+      - -DGIT_COMMIT=v25.9
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.8
+        tag: v25.9
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 5c137fe28b232fe460f9b03defa7749adc32ee48
+        tag: 7a4018e2d89151e60e562fac79eba90ca7a328d8
 
         dest: deps/monado-src
       - type: shell
