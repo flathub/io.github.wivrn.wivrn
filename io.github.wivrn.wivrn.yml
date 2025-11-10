@@ -354,13 +354,13 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.11
-      - -DGIT_COMMIT=v25.11
+      - -DGIT_DESC=v25.11.1
+      - -DGIT_COMMIT=v25.11.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.11
+        tag: v25.11.1
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
         tag: 06e62fc7d9c5cbcbc43405bb86dfde3bf01ce043
@@ -389,13 +389,13 @@ modules:
       - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.11
-      - -DGIT_COMMIT=v25.11
+      - -DGIT_DESC=v25.11.1
+      - -DGIT_COMMIT=v25.11.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.11
+        tag: v25.11.1
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
