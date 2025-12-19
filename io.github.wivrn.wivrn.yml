@@ -69,6 +69,10 @@ modules:
     - type: git
       url: https://github.com/crosstool-ng/crosstool-ng.git
       tag: 70c2b00ad79a0a21a48e5a0eedc9f91c374af21d
+    - type: shell
+      commands:
+       - sed -i 's/-O2 -g/-O2/' scripts/crosstool-NG.sh
+       - sed -i 's/-g -O2/-O2/' scripts/build/cc/gcc.sh
     cleanup:
       - '*'
 
@@ -354,16 +358,16 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.11.1
-      - -DGIT_COMMIT=v25.11.1
+      - -DGIT_DESC=v25.12
+      - -DGIT_COMMIT=v25.12
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.11.1
+        tag: v25.12
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 06e62fc7d9c5cbcbc43405bb86dfde3bf01ce043
+        tag: 20e0dacbdd2de863923790326beec76e848b056a
 
         dest: deps/monado-src
       - type: shell
@@ -386,23 +390,23 @@ modules:
       - -DWIVRN_USE_PIPEWIRE=ON
       - -DWIVRN_USE_SYSTEM_BOOST=OFF
       - -DWIVRN_WERROR=ON
-      - -DWIVRN_CHECK_CAPSYSNICE=OFF # Capabilities don't work inside flatpak
+      - -DWIVRN_FEATURE_STEAMVR_LIGHTHOUSE=OFF
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v25.11.1
-      - -DGIT_COMMIT=v25.11.1
+      - -DGIT_DESC=v25.12
+      - -DGIT_COMMIT=v25.12
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v25.11.1
+        tag: v25.12
       - type: archive
         url: https://github.com/boostorg/pfr/archive/refs/tags/2.2.0.tar.gz
         dest: deps/boostpfr-src
         sha256: 6f490ec1383de5855dcf801c23f0a967f888eb6e1440b6ca0bf36c12d4ae7ac7
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 06e62fc7d9c5cbcbc43405bb86dfde3bf01ce043
+        tag: 20e0dacbdd2de863923790326beec76e848b056a
 
         dest: deps/monado-src
       - type: shell
