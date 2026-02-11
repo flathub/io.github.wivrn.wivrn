@@ -353,16 +353,16 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.2
-      - -DGIT_COMMIT=v26.2
+      - -DGIT_DESC=v26.2.1
+      - -DGIT_COMMIT=v26.2.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.2
+        tag: v26.2.1
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 9dcc3e1de2f7449d9757f5db332c867b4d794fb3
+        tag: 723652b545a79609f9f04cb89fcbf807d9d6451a
 
         dest: deps/monado-src
       - type: shell
@@ -389,20 +389,20 @@ modules:
       - -DWIVRN_FEATURE_STEAMVR_LIGHTHOUSE=OFF
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.2
-      - -DGIT_COMMIT=v26.2
+      - -DGIT_DESC=v26.2.1
+      - -DGIT_COMMIT=v26.2.1
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.2
+        tag: v26.2.1
       - type: archive
         url: https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.xz
         dest: deps/boost-src
         sha256: 67acec02d0d118b5de9eb441f5fb707b3a1cdd884be00ca24b9a73c995511f74
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 9dcc3e1de2f7449d9757f5db332c867b4d794fb3
+        tag: 723652b545a79609f9f04cb89fcbf807d9d6451a
 
         dest: deps/monado-src
       - type: shell
