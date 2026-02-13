@@ -9,7 +9,6 @@ sdk-extensions:
 command: wivrn-dashboard
 separate-locales: false
 
-
 finish-args:
   # X11 + XShm access
   - --share=ipc
@@ -320,7 +319,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Supreeeme/xrizer.git
-        tag: be664bb93eebdd82336d00230154bacc6f8b9765
+        tag: 018312f19c81c229bbf7862e3c1f836971763925
       - xrizer-gen-src.json
 
   - name: wivrn-library
