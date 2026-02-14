@@ -319,7 +319,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Supreeeme/xrizer.git
-        tag: 018312f19c81c229bbf7862e3c1f836971763925
+        tag: be664bb93eebdd82336d00230154bacc6f8b9765
       - xrizer-gen-src.json
 
   - name: wivrn-library
@@ -353,13 +353,13 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.2.1
-      - -DGIT_COMMIT=v26.2.1
+      - -DGIT_DESC=v26.2.2
+      - -DGIT_COMMIT=v26.2.2
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.2.1
+        tag: v26.2.2
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
         tag: 723652b545a79609f9f04cb89fcbf807d9d6451a
@@ -389,13 +389,13 @@ modules:
       - -DWIVRN_FEATURE_STEAMVR_LIGHTHOUSE=OFF
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.2.1
-      - -DGIT_COMMIT=v26.2.1
+      - -DGIT_DESC=v26.2.2
+      - -DGIT_COMMIT=v26.2.2
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.2.1
+        tag: v26.2.2
       - type: archive
         url: https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.xz
         dest: deps/boost-src
