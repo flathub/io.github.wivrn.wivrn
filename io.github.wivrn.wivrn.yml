@@ -350,7 +350,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.6
+        tag: 1c1215da2080646da2fa5a273600b544fd79359b
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
         tag: 1b526bb3a0ff326ecd05af4c2c541407f53c6d4b
@@ -387,7 +387,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.6
+        tag: 1c1215da2080646da2fa5a273600b544fd79359b
       - type: archive
         url: https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.xz
         dest: deps/boost-src
