@@ -1,11 +1,11 @@
 # kate: syntax yaml
 id: io.github.wivrn.wivrn
 runtime: org.kde.Platform
-runtime-version: '6.9'
+runtime-version: '6.10'
 sdk: org.kde.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm18
+  - org.freedesktop.Sdk.Extension.llvm20
 command: wivrn-dashboard
 separate-locales: false
 
@@ -73,7 +73,7 @@ modules:
     sources:
     - type: git
       url: https://github.com/crosstool-ng/crosstool-ng.git
-      tag: 620b909cd0713f68084378b63cf61b5232757b90
+      commit: 620b909cd0713f68084378b63cf61b5232757b90
     - type: shell
       commands:
        # Make the build lighter:
@@ -96,14 +96,17 @@ modules:
     sources:
     - type: git
       url: https://github.com/RsyncProject/rsync.git
-      tag: 3305a7a063ab0167cab5bf7029da53abaa9fdb6e
+      commit: 3305a7a063ab0167cab5bf7029da53abaa9fdb6e
     cleanup:
       - '*'
 
   - name: toolchain
     sources:
+    # mirror-urls are fallbacks, used when the primary url fails.
     - type: file
       url: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.177.tar.xz
+      mirror-urls:
+        - https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.15.177.tar.xz
       sha256: ea9eb8088d4231f8a01b191ceef5f4d92238f6c7519f6fbcb57e448ee9e0a6e0
     - type: file
       url: https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.xz
@@ -113,34 +116,63 @@ modules:
       sha256: 8c29e06cf42aacc1eafc4077ae2ec6c6fcb96a626157e0593d5e82a34fd403c1
     - type: file
       url: https://ftpmirror.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz
+        - https://mirrors.kernel.org/gnu/gmp/gmp-6.3.0.tar.xz
       sha256: a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
     - type: file
       url: https://www.mpfr.org/mpfr-4.2.1/mpfr-4.2.1.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz
+        - https://mirrors.kernel.org/gnu/mpfr/mpfr-4.2.1.tar.xz
       sha256: 277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2
     - type: file
       dest-filename: isl-0.26.tar.xz
       url: https://sourceforge.net/projects/libisl/files/isl-0.26.tar.xz/download
+      mirror-urls:
+        - https://libisl.sourceforge.io/isl-0.26.tar.xz
       sha256: a0b5cb06d24f9fa9e77b55fabbe9a3c94a336190345c2555f9915bb38e976504
     - type: file
       url: https://ftpmirror.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
+        - https://mirrors.kernel.org/gnu/mpc/mpc-1.3.1.tar.gz
       sha256: ab642492f5cf882b74aa0cb730cd410a81edcdbec895183ce930e706c1c759b8
     - type: file
       url: https://invisible-mirror.net/archives/ncurses/ncurses-6.4.tar.gz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz
+        - https://mirrors.kernel.org/gnu/ncurses/ncurses-6.4.tar.gz
       sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
     - type: file
       url: https://ftpmirror.gnu.org/gnu/libiconv/libiconv-1.16.tar.gz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/libiconv/libiconv-1.16.tar.gz
+        - https://mirrors.kernel.org/gnu/libiconv/libiconv-1.16.tar.gz
       sha256: e6a1b1b589654277ee790cce3734f07876ac4ccfaecbee8afa0b649cf529cc04
     - type: file
       url: https://ftpmirror.gnu.org/gnu/gettext/gettext-0.23.1.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/gettext/gettext-0.23.1.tar.xz
+        - https://mirrors.kernel.org/gnu/gettext/gettext-0.23.1.tar.xz
       sha256: c1f97a72a7385b7e71dd07b5fea6cdaf12c9b88b564976b23bd8c11857af2970
     - type: file
       url: https://ftpmirror.gnu.org/gnu/binutils/binutils-2.43.1.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/binutils/binutils-2.43.1.tar.xz
+        - https://mirrors.kernel.org/gnu/binutils/binutils-2.43.1.tar.xz
       sha256: 13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd
     - type: file
       url: https://ftpmirror.gnu.org/gnu/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz
+        - https://mirrors.kernel.org/gnu/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz
       sha256: a6e21868ead545cf87f0c01f84276e4b5281d672098591c1c896241f09363478
     - type: file
       url: https://ftpmirror.gnu.org/gnu/glibc/glibc-2.35.tar.xz
+      mirror-urls:
+        - https://ftp.gnu.org/gnu/glibc/glibc-2.35.tar.xz
+        - https://mirrors.kernel.org/gnu/glibc/glibc-2.35.tar.xz
       sha256: 5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e
     - type: file
       path: ct-ng-x86_64.config
@@ -180,6 +212,7 @@ modules:
     - type: git
       url: https://github.com/avahi/avahi.git
       tag: v0.8
+      commit: f060abee2807c943821d88839c013ce15db17b58
     cleanup:
       - /share/locale
       - /share/runtime/locale
@@ -192,7 +225,7 @@ modules:
     sources:
     - type: git
       url: https://code.videolan.org/videolan/x264.git
-      tag: 31e19f92f00c7003fa115047ce50978bc98c3a0d
+      commit: 31e19f92f00c7003fa115047ce50978bc98c3a0d
     cleanup:
       - /bin/x264
 
@@ -220,7 +253,8 @@ modules:
     sources:
     - type: git
       url: https://gitlab.com/freedesktop-sdk/mirrors/ffmpeg/ffmpeg.git
-      tag: n7.0.1
+      tag: n7.1.4
+      commit: 9abe92e3af7fa7becc8f7f742b1457b4c28220a6
 
   - name: eigen3
     buildsystem: cmake-ninja
@@ -231,6 +265,7 @@ modules:
     - type: git
       url: https://gitlab.com/libeigen/eigen.git
       tag: 5.0.1
+      commit: bc3b39870ecb690a623a3f49149a358b95c5781d
     cleanup:
       - '*'
 
@@ -241,7 +276,8 @@ modules:
     sources:
     - type: git
       url: https://github.com/nlohmann/json.git
-      tag: v3.11.3
+      tag: v3.12.0
+      commit: 55f93686c01528224f448c19128836e7df245f72
 
   - name: cli11
     buildsystem: cmake-ninja
@@ -253,7 +289,8 @@ modules:
     sources:
     - type: git
       url: https://github.com/CLIUtils/CLI11
-      tag: v2.4.2
+      tag: v2.6.2
+      commit: 37bb6edc5317e99af72ef48405e65d9ca5218861
     cleanup:
       - '*'
 
@@ -279,12 +316,12 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/znixian/OpenOVR.git
-        tag: cff07db75c4823afe93ed7027b03d5f7bc86f164
+        commit: cff07db75c4823afe93ed7027b03d5f7bc86f164
 
   - name: xrizer
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm20/bin
       cflags: -idirafter/usr/include
       cxxflags: -idirafter/usr/include
       env:
@@ -310,7 +347,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/Supreeeme/xrizer.git
-        tag: be664bb93eebdd82336d00230154bacc6f8b9765
+        commit: be664bb93eebdd82336d00230154bacc6f8b9765
       - xrizer-gen-src.json
 
   - name: wivrn-library
@@ -344,16 +381,17 @@ modules:
       - -DWIVRN_WERROR=ON
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.6.2
-      - -DGIT_COMMIT=v26.6.2
+      - -DGIT_TAG=v26.9
+      - -DGIT_DESC=
+      - -DGIT_COMMIT=
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.6.2
+        commit: bbc6e4cc36c355fa6180980abd231673dc15115d
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 1b526bb3a0ff326ecd05af4c2c541407f53c6d4b
+        commit: f037264d23e2472a444a157370647fcd601ed81b
 
         dest: deps/monado-src
       - type: shell
@@ -373,7 +411,6 @@ modules:
       - -DWIVRN_USE_X264=ON
       - -DWIVRN_USE_NVENC=ON
       - -DWIVRN_USE_VULKAN_ENCODE=ON
-      - -DWIVRN_USE_PULSEAUDIO=OFF
       - -DWIVRN_USE_PIPEWIRE=ON
       - -DWIVRN_USE_SYSTEM_BOOST=OFF
       - -DWIVRN_FEATURE_SOLARXR=ON
@@ -381,20 +418,21 @@ modules:
       - -DWIVRN_FEATURE_STEAMVR_LIGHTHOUSE=OFF
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_BASE_DIR=deps
-      - -DGIT_DESC=v26.6.2
-      - -DGIT_COMMIT=v26.6.2
+      - -DGIT_TAG=v26.9
+      - -DGIT_DESC=
+      - -DGIT_COMMIT=
       - -Wno-dev
     sources:
       - type: git
         url: https://github.com/WiVRn/WiVRn.git
-        tag: v26.6.2
+        commit: bbc6e4cc36c355fa6180980abd231673dc15115d
       - type: archive
         url: https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.xz
         dest: deps/boost-src
         sha256: 67acec02d0d118b5de9eb441f5fb707b3a1cdd884be00ca24b9a73c995511f74
       - type: git
         url: https://gitlab.freedesktop.org/monado/monado
-        tag: 1b526bb3a0ff326ecd05af4c2c541407f53c6d4b
+        commit: f037264d23e2472a444a157370647fcd601ed81b
 
         dest: deps/monado-src
       - type: shell
