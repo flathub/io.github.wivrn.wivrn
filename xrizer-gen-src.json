@@ -1,11 +1,5 @@
 [
     {
-        "type": "git",
-        "url": "https://github.com/ralith/openxrs",
-        "commit": "d0afdd3365bc1e14de28f6a3a21f457e788a702e",
-        "dest": "flatpak-cargo/git/openxrs-d0afdd3"
-    },
-    {
         "type": "archive",
         "archive-type": "tar-gzip",
         "url": "https://static.crates.io/crates/ab_glyph/ab_glyph-0.2.32.crate",
@@ -1243,6 +1237,19 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/libloading/libloading-0.9.0.crate",
+        "sha256": "754ca22de805bb5744484a5b151a9e1a8e837d5dc232c2d7d8c2e3492edc8b60",
+        "dest": "cargo/vendor/libloading-0.9.0"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"754ca22de805bb5744484a5b151a9e1a8e837d5dc232c2d7d8c2e3492edc8b60\", \"files\": {}}",
+        "dest": "cargo/vendor/libloading-0.9.0",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
         "url": "https://static.crates.io/crates/linux-raw-sys/linux-raw-sys-0.4.15.crate",
         "sha256": "d26c52dbd32dccf2d10cac7725f8eae5296885fb5703b261f7d0a0739ec807ab",
         "dest": "cargo/vendor/linux-raw-sys-0.4.15"
@@ -1316,6 +1323,19 @@
         "type": "inline",
         "contents": "{\"package\": \"419e0dc8046cb947daa77eb95ae174acfbddb7673b4151f56d1eed8e93fbfaca\", \"files\": {}}",
         "dest": "cargo/vendor/loom-0.7.2",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/lz4_flex/lz4_flex-0.12.0.crate",
+        "sha256": "ab6473172471198271ff72e9379150e9dfd70d8e533e0752a27e515b48dd375e",
+        "dest": "cargo/vendor/lz4_flex-0.12.0"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"ab6473172471198271ff72e9379150e9dfd70d8e533e0752a27e515b48dd375e\", \"files\": {}}",
+        "dest": "cargo/vendor/lz4_flex-0.12.0",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -1516,6 +1536,19 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/obj/obj-0.10.2.crate",
+        "sha256": "059c95245738cdc7b40078cdd51a23200252a4c0a0a6dd005136152b3f467a4a",
+        "dest": "cargo/vendor/obj-0.10.2"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"059c95245738cdc7b40078cdd51a23200252a4c0a0a6dd005136152b3f467a4a\", \"files\": {}}",
+        "dest": "cargo/vendor/obj-0.10.2",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
         "url": "https://static.crates.io/crates/objc-rs/objc-rs-0.2.8.crate",
         "sha256": "64a1e7069a2525126bf12a9f1f7916835fafade384fb27cabf698e745e2a1eb8",
         "dest": "cargo/vendor/objc-rs-0.2.8"
@@ -1696,52 +1729,42 @@
         "dest-filename": ".cargo-checksum.json"
     },
     {
-        "type": "shell",
-        "commands": [
-            "cp -r --reflink=auto \"flatpak-cargo/git/openxrs-d0afdd3/openxr\" \"cargo/vendor/openxr\""
-        ]
+        "type": "archive",
+        "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/openxr/openxr-0.22.0.crate",
+        "sha256": "53770c8f7d3f185bcb577b78f2ed8e33bbf7cdf5cd57fb68b5ec0b4117b79de6",
+        "dest": "cargo/vendor/openxr-0.22.0"
     },
     {
         "type": "inline",
-        "contents": "[[example]]\nname = \"vulkan\"\n\n[[example]]\nname = \"vulkan-android\"\npath = \"examples/vulkan.rs\"\ncrate-type = [ \"cdylib\",]\n\n[package]\nname = \"openxr\"\ndescription = \"High-level, mostly-safe OpenXR bindings\"\nrepository = \"https://github.com/Ralith/openxrs\"\nreadme = \"../README.md\"\nversion = \"0.19.0\"\nauthors = [ \"Benjamin Saunders <ben.e.saunders@gmail.com>\",]\ncategories = [ \"api-bindings\", \"rendering\",]\nkeywords = [ \"vr\",]\nlicense = \"MIT/Apache-2.0\"\nedition = \"2018\"\n\n[features]\nstatic = [ \"sys/static\", \"linked\",]\nloaded = [ \"libloading\",]\nlinked = [ \"sys/linked\",]\nmint = [ \"sys/mint\",]\ndefault = [ \"loaded\",]\n\n[dependencies]\nlibc = \"0.2.50\"\n\n[dev-dependencies]\nctrlc = \"3.1.5\"\n\n[badges.maintenance]\nstatus = \"experimental\"\n\n[dependencies.sys]\npackage = \"openxr-sys\"\npath = \"../sys\"\nversion = \"0.11.0\"\n\n[dependencies.libloading]\nversion = \"0.8\"\noptional = true\n\n[dev-dependencies.ash]\nversion = \"0.38\"\ndefault-features = false\nfeatures = [ \"loaded\",]\n\n[package.metadata.android]\nbuild_targets = [ \"aarch64-linux-android\",]\nruntime_libs = \"examples/libs\"\n\n[target.\"cfg(target_os = \\\"android\\\")\".dependencies]\nndk-context = \"0.1\"\n\n[package.metadata.docs.rs]\nfeatures = [ \"linked\", \"loaded\", \"mint\",]\n\n[package.metadata.android.sdk]\nmin_sdk_version = 21\ntarget_sdk_version = 30\n\n[package.metadata.android.application.activity]\ntheme = \"@android:style/Theme.Black.NoTitleBar.Fullscreen\"\nconfig_changes = \"density|keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|uiMode\"\nlaunch_mode = \"singleTask\"\norientation = \"landscape\"\nresizeable_activity = \"false\"\n[[package.metadata.android.application.activity.intent_filter]]\nactions = [ \"android.intent.action.MAIN\",]\ncategories = [ \"com.oculus.intent.category.VR\", \"android.intent.category.LAUNCHER\",]\n\n",
-        "dest": "cargo/vendor/openxr",
-        "dest-filename": "Cargo.toml"
-    },
-    {
-        "type": "inline",
-        "contents": "{\"package\": null, \"files\": {}}",
-        "dest": "cargo/vendor/openxr",
-        "dest-filename": ".cargo-checksum.json"
-    },
-    {
-        "type": "shell",
-        "commands": [
-            "cp -r --reflink=auto \"flatpak-cargo/git/openxrs-d0afdd3/sys\" \"cargo/vendor/openxr-sys\""
-        ]
-    },
-    {
-        "type": "inline",
-        "contents": "[package]\nname = \"openxr-sys\"\ndescription = \"OpenXR FFI bindings\"\nrepository = \"https://github.com/Ralith/openxrs\"\nreadme = \"../README.md\"\nversion = \"0.11.0\"\nauthors = [ \"Benjamin Saunders <ben.e.saunders@gmail.com>\",]\ncategories = [ \"external-ffi-bindings\", \"rendering\",]\nkeywords = [ \"openxr\", \"vr\",]\nlicense = \"MIT/Apache-2.0\"\nedition = \"2018\"\nlinks = \"openxr_loader\"\n\n[features]\nlinked = []\nstatic = [ \"cmake\", \"linked\",]\n\n[dependencies]\nlibc = \"0.2.50\"\n\n[badges.maintenance]\nstatus = \"experimental\"\n\n[dependencies.mint]\nversion = \"0.5.3\"\noptional = true\n\n[build-dependencies.cmake]\nversion = \"0.1.35\"\noptional = true\n\n[package.metadata.docs.rs]\nfeatures = [ \"linked\", \"mint\",]\n",
-        "dest": "cargo/vendor/openxr-sys",
-        "dest-filename": "Cargo.toml"
-    },
-    {
-        "type": "inline",
-        "contents": "{\"package\": null, \"files\": {}}",
-        "dest": "cargo/vendor/openxr-sys",
+        "contents": "{\"package\": \"53770c8f7d3f185bcb577b78f2ed8e33bbf7cdf5cd57fb68b5ec0b4117b79de6\", \"files\": {}}",
+        "dest": "cargo/vendor/openxr-0.22.0",
         "dest-filename": ".cargo-checksum.json"
     },
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/openxr_mndx_xdev_space/openxr_mndx_xdev_space-0.1.1.crate",
-        "sha256": "fc03c3948dceb287224eaa9079a5d4f690e91b43a2385da6c686edf0f850408a",
-        "dest": "cargo/vendor/openxr_mndx_xdev_space-0.1.1"
+        "url": "https://static.crates.io/crates/openxr-sys/openxr-sys-0.14.0.crate",
+        "sha256": "febb5d50cee7b964b69d5b7a810ed9620fc64f41382ffefe05434754c7a48877",
+        "dest": "cargo/vendor/openxr-sys-0.14.0"
     },
     {
         "type": "inline",
-        "contents": "{\"package\": \"fc03c3948dceb287224eaa9079a5d4f690e91b43a2385da6c686edf0f850408a\", \"files\": {}}",
-        "dest": "cargo/vendor/openxr_mndx_xdev_space-0.1.1",
+        "contents": "{\"package\": \"febb5d50cee7b964b69d5b7a810ed9620fc64f41382ffefe05434754c7a48877\", \"files\": {}}",
+        "dest": "cargo/vendor/openxr-sys-0.14.0",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/openxr_mndx_xdev_space/openxr_mndx_xdev_space-0.3.0.crate",
+        "sha256": "d7f7d65f829a75e16554c1558e926506f039fe20a0f76fd7581415003d789f13",
+        "dest": "cargo/vendor/openxr_mndx_xdev_space-0.3.0"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"d7f7d65f829a75e16554c1558e926506f039fe20a0f76fd7581415003d789f13\", \"files\": {}}",
+        "dest": "cargo/vendor/openxr_mndx_xdev_space-0.3.0",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -2007,14 +2030,14 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/regex/regex-1.12.2.crate",
-        "sha256": "843bc0191f75f3e22651ae5f1e72939ab2f72a4bc30fa80a066bd66edefc24d4",
-        "dest": "cargo/vendor/regex-1.12.2"
+        "url": "https://static.crates.io/crates/regex/regex-1.12.3.crate",
+        "sha256": "e10754a14b9137dd7b1e3e5b0493cc9171fdd105e0ab477f51b72e7f3ac0e276",
+        "dest": "cargo/vendor/regex-1.12.3"
     },
     {
         "type": "inline",
-        "contents": "{\"package\": \"843bc0191f75f3e22651ae5f1e72939ab2f72a4bc30fa80a066bd66edefc24d4\", \"files\": {}}",
-        "dest": "cargo/vendor/regex-1.12.2",
+        "contents": "{\"package\": \"e10754a14b9137dd7b1e3e5b0493cc9171fdd105e0ab477f51b72e7f3ac0e276\", \"files\": {}}",
+        "dest": "cargo/vendor/regex-1.12.3",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -2639,6 +2662,19 @@
         "type": "inline",
         "contents": "{\"package\": \"d2df906b07856748fa3f6e0ad0cbaa047052d4a7dd609e231c4f72cee8c36f31\", \"files\": {}}",
         "dest": "cargo/vendor/ttf-parser-0.25.1",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/twox-hash/twox-hash-2.1.2.crate",
+        "sha256": "9ea3136b675547379c4bd395ca6b938e5ad3c3d20fad76e7fe85f9e0d011419c",
+        "dest": "cargo/vendor/twox-hash-2.1.2"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"9ea3136b675547379c4bd395ca6b938e5ad3c3d20fad76e7fe85f9e0d011419c\", \"files\": {}}",
+        "dest": "cargo/vendor/twox-hash-2.1.2",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -3852,7 +3888,7 @@
     },
     {
         "type": "inline",
-        "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.\"https://github.com/ralith/openxrs\"]\ngit = \"https://github.com/ralith/openxrs\"\nreplace-with = \"vendored-sources\"\nrev = \"d0afdd3\"\n",
+        "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n",
         "dest": "cargo",
         "dest-filename": "config"
     }
